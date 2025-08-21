@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 const productsData = [
@@ -88,7 +89,7 @@ export default function ProductsPage() {
               <h2 className="text-xl font-semibold">{product.name}</h2>
               <p className="text-gray-600 mt-2">{product.description}</p>
               <p className="mt-3 font-bold text-lg">${product.price}</p>
-              <button className="btn btn-primary mt-4 w-full">Details</button>
+              <Link href={`/products/${product.id}`} className="btn btn-primary mt-4 w-full">Details</Link>
             </div>
           </div>
         ))}

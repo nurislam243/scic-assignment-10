@@ -1,28 +1,29 @@
 "use client";
 
-import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function LoginPage() {
+export default function RegisterPage() {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
 
-  // Handle credential login
-  const handleCredentialLogin = async (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
 
-    const result = await signIn("credentials", {
-      redirect: false,
-      email,
-      password,
+    const res = await fetch("/api/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, password }),
     });
 
-    if (result?.ok) {
-      router.push("/products");
+    if (res.ok) {
+      alert("User registered successfully!");
+      router.push("/login"); // redirect to login page
     } else {
-      alert(result?.error || "Login failed");
+      const data = await res.text();
+      alert("Registration failed: " + data);
     }
   };
 
@@ -31,23 +32,18 @@ export default function LoginPage() {
       <div className="card w-full max-w-md shadow-xl bg-base-100">
         <div className="card-body text-center">
           <h1 className="text-3xl font-bold text-gray-800 mb-4">
-            Login to <span className="text-primary">ShopNex</span>
+            Register for <span className="text-primary">ShopNex</span>
           </h1>
 
-          <p className="text-gray-600 mb-6">
-            Sign in with Google or use your email/password
-          </p>
-
-          {/* Google Login Button */}
-          <button
-            onClick={() => signIn("google")}
-            className="btn btn-primary btn-block mb-4"
-          >
-            Sign in with Google
-          </button>
-
-          {/* Credential Login Form */}
-          <form onSubmit={handleCredentialLogin} className="space-y-3">
+          <form onSubmit={handleRegister} className="space-y-3">
+            <input
+              type="text"
+              placeholder="Full Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="input input-bordered w-full"
+              required
+            />
             <input
               type="email"
               placeholder="Email"
@@ -64,13 +60,13 @@ export default function LoginPage() {
               className="input input-bordered w-full"
               required
             />
-            <button type="submit" className="btn btn-secondary btn-block mt-2">
-              Login
+            <button type="submit" className="btn btn-primary btn-block mt-2">
+              Register
             </button>
           </form>
 
           <p className="mt-6 text-gray-500 text-sm">
-            Don't have an account? <a href="/register" className="text-primary">Register</a>
+            Already have an account? <a href="/login" className="text-primary">Login</a>
           </p>
         </div>
       </div>

@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { useSession, signOut } from "next-auth/react";
 import { useState } from "react";
 import { HiMenu, HiX } from "react-icons/hi";
@@ -18,10 +19,17 @@ const Navbar = () => {
     <nav className="bg-base-100 shadow shadow-primary/40 sticky top-0 z-50 px-3 @min-[370px]:px-4 @min-[600px]:px-7 @min-[800px]:px-9 @min-[1200px]:px-10 @min-[1580px]:px-0">
       <div className="max-w-[1536px] mx-auto flex items-center justify-between py-4  ">
         {/* Logo */}
-        <Link href="/" className="text-2xl font-bold text-primary">
-          ShopNex
+        <Link href="/" className="flex items-center space-x-2">
+          {/* Icon / Logo Image */}
+          <Image
+            src="/shopnex.png"
+            alt="ShopNex Logo"
+            width={20}
+            height={22}
+          />
+          {/* Text */}
+          <span className="text-2xl font-bold text-primary">ShopNex</span>
         </Link>
-
         {/* Desktop Links */}
         <div className="hidden md:flex space-x-6 font-medium items-center">
           <Link href="/" className={isActive("/")}>Home</Link>

@@ -1,5 +1,6 @@
 import { FaFacebookF, FaLinkedinIn, FaGithub } from "react-icons/fa";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Footer() {
   const socialLinks = [
@@ -13,8 +14,17 @@ export default function Footer() {
       <div className="max-w-[1536px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
         {/* About */}
         <div>
-          <Link href="/" className="text-2xl font-bold text-primary">
-            ShopNex
+          {/* Logo */}
+          <Link href="/" className="flex items-center space-x-2">
+            {/* Icon / Logo Image */}
+            <Image
+              src="/shopnex.png"
+              alt="ShopNex Logo"
+              width={20}
+              height={22}
+            />
+            {/* Text */}
+            <span className="text-2xl font-bold text-primary">ShopNex</span>
           </Link>
           <p className="text-gray-200 mt-2">
             ShopNex is your one-stop online store for tech gadgets, electronics, and accessories. Discover top products at amazing prices.

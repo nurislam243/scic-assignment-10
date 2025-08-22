@@ -35,7 +35,7 @@ const Navbar = () => {
             >
               Dashboard
             </label>
-            <ul tabIndex={0} className="dropdown-content menu p-2 shadow shadow-primary/20 bg-base-200 rounded-box w-52 mt-2">
+            <ul tabIndex={0} className="dropdown-content menu p-2 shadow-md border border-primary shadow-primary/50 bg-base-200 rounded-box w-52 mt-2">
               <li>
                 <Link
                   href="/dashboard/add-product"

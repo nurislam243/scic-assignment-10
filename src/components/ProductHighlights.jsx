@@ -20,11 +20,11 @@ export default function ProductHighlights() {
   }, []);
 
   return (
-    <section className="max-w-[1536px] mx-auto px-3 @min-[370px]:px-4 @min-[600px]:px-7 @min-[800px]:px-9 @min-[1200px]:px-10 @min-[1580px]:px-0 mb-8">
+    <section className="max-w-[1536px] mx-auto px-3 @min-[370px]:px-4 @min-[600px]:px-7 @min-[800px]:px-9 @min-[1200px]:px-10 @min-[1580px]:px-0 mb-8 md:mb-14 lg:mb-[70px]">
       <h2 className="text-3xl font-bold text-center mb-10 text-primary">
         Featured Products
       </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 @min-[1350px]:grid-cols-4 gap-6">
         {highlightProducts.map((product) => (
           <div
             key={product._id}
@@ -42,8 +42,8 @@ export default function ProductHighlights() {
             <div className="card-body bg-base-200 items-start"> {/* Left align here */}
               <h3 className="card-title text-primary">{product.name}</h3>
               <p className="text-base-content/80 line-clamp-2">{product.description}</p>
-              <p className="font-bold mt-2">${product.price}</p>
-              <div className="card-actions mt-4">
+              <p className="font-bold">${product.price}</p>
+              <div className="card-actions mt-1">
                 <Link href={`/products/${product._id}`} className="btn btn-primary">View Details</Link>
               </div>
             </div>

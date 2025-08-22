@@ -68,8 +68,8 @@ export default function AddProductPage() {
 
   return (
     <div className="px-3 @min-[370px]:px-4 @min-[600px]:px-7 @min-[800px]:px-9 @min-[1200px]:px-10 @min-[1580px]:px-0">
-      <div className="max-w-lg mx-auto mt-10 p-6 bg-base-100 shadow-xl rounded-xl">
-        <h1 className="text-2xl font-bold mb-6 text-center">Add New Product</h1>
+      <div className="max-w-[800px] mx-auto mt-[14vh] p-6 bg-base-200/40 shadow-md shadow-primary/20 rounded-xl">
+        <h1 className="text-2xl text-primary font-bold mb-6 text-center">Add New Product</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="text"

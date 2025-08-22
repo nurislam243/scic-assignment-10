@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { FaStar, FaRegStar, FaStarHalfAlt } from "react-icons/fa";
 
 export default function ProductDetailPage({ params }) {
   const { id } = params;
@@ -26,6 +27,21 @@ export default function ProductDetailPage({ params }) {
     fetchProduct();
   }, [id]);
 
+  // Rating function
+  const renderStars = (rating) => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      if (rating >= i) {
+        stars.push(<FaStar key={i} className="text-yellow-500 inline-block" />);
+      } else if (rating >= i - 0.5) {
+        stars.push(<FaStarHalfAlt key={i} className="text-yellow-500 inline-block" />);
+      } else {
+        stars.push(<FaRegStar key={i} className="text-yellow-500 inline-block" />);
+      }
+    }
+    return stars;
+  };
+
   if (!product) {
     return (
       <div className="text-center py-20">
@@ -41,26 +57,55 @@ export default function ProductDetailPage({ params }) {
   }
 
   return (
-    <div className="container mx-auto px-6 py-10">
-      <button onClick={() => router.back()} className="btn btn-secondary mb-6">
+    <div className="max-w-[1536px] mx-auto py-10 px-3 @min-[370px]:px-4 @min-[600px]:px-7 @min-[800px]:px-9 @min-[1200px]:px-10 @min-[1580px]:px-0">
+      {/* Back Button */}
+      <button onClick={() => router.back()} className="btn btn-primary mb-6">
         ← Back
       </button>
-      <div className="bg-base-200 shadow-lg rounded-xl overflow-hidden lg:flex lg:gap-6 p-6">
-        <div className="lg:w-1/2">
-          <Image
-            src={product.image}
-            alt={product.name}
-            width={600}
-            height={400}
-            className="object-cover rounded-lg w-[600px] h-[400px]"
-          />
+
+      {/* Image on Top */}
+      <div className="w-full h-[400px] relative mb-8">
+        <Image
+          src={product.image}
+          alt={product.name}
+          fill
+          className="object-cover rounded-lg"
+        />
+      </div>
+
+      {/* Product Details */}
+      <div className="bg-base-200 shadow-lg rounded-xl p-6">
+        <h1 className="text-4xl font-bold mb-4">{product.name}</h1>
+        <p className="text-lg text-base-content mb-4">{product.description}</p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div>
+            <p className="text-lg">
+              <span className="font-semibold">Category:</span> {product.category}
+            </p>
+            <p className="text-lg">
+              <span className="font-semibold">Brand:</span> {product.brand}
+            </p>
+            <p className="text-lg">
+              <span className="font-semibold">Release Date:</span>{" "}
+              {new Date(product.releaseDate).toLocaleDateString()}
+            </p>
+          </div>
+          <div>
+            <p className="text-lg flex items-center gap-2">
+              <span className="font-semibold">Stock:</span> {product.stock} pcs
+            </p>
+            <p className="text-lg flex items-center gap-2">
+              <span className="font-semibold">Rating:</span>{" "}
+              <span className="flex">{renderStars(product.rating)}</span>
+              <span className="ml-2">({product.rating})</span>
+            </p>
+          </div>
         </div>
-        <div className="lg:w-1/2 mt-6 lg:mt-0">
-          <h1 className="text-4xl font-bold mb-4">{product.name}</h1>
-          <p className="text-base-content mb-4">{product.description}</p>
-          <p className="text-3xl font-semibold mb-6">${product.price}</p>
-          <button className="btn btn-primary">Add to Cart</button>
-        </div>
+
+        <p className="text-3xl font-semibold mb-6">${product.price}</p>
+
+        <button className="btn btn-primary w-full">Add to Cart</button>
       </div>
     </div>
   );

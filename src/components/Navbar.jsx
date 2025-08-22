@@ -3,13 +3,19 @@ import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import { useState } from "react";
 import { HiMenu, HiX } from "react-icons/hi";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const { data: session } = useSession();
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  // Helper for active link class
+  const isActive = (path) =>
+    pathname === path ? "text-primary font-semibold" : "hover:text-primary";
 
   return (
-    <nav className="bg-base-100 shadow sticky top-0 z-50 px-3 @min-[370px]:px-4 @min-[600px]:px-7 @min-[800px]:px-9 @min-[1200px]:px-10 @min-[1580px]:px-0">
+    <nav className="bg-base-100 shadow shadow-primary/40 sticky top-0 z-50 px-3 @min-[370px]:px-4 @min-[600px]:px-7 @min-[800px]:px-9 @min-[1200px]:px-10 @min-[1580px]:px-0">
       <div className="max-w-[1536px] mx-auto flex items-center justify-between py-4  ">
         {/* Logo */}
         <Link href="/" className="text-2xl font-bold text-primary">
@@ -18,16 +24,26 @@ const Navbar = () => {
 
         {/* Desktop Links */}
         <div className="hidden md:flex space-x-6 font-medium items-center">
-          <Link href="/" className="hover:text-primary">Home</Link>
-          <Link href="/products" className="hover:text-primary">Products</Link>
+          <Link href="/" className={isActive("/")}>Home</Link>
+          <Link href="/products" className={isActive("/products")}>Products</Link>
 
           {/* Dashboard Dropdown */}
           <div className="dropdown dropdown-end">
-            <label tabIndex={0} className="cursor-pointer hover:text-primary">
+            <label
+              tabIndex={0}
+              className={`cursor-pointer ${pathname.startsWith("/dashboard") ? "text-primary font-semibold" : "hover:text-primary"}`}
+            >
               Dashboard
             </label>
-            <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-200 rounded-box w-52 mt-2">
-              <li><Link href="/dashboard/add-product">Add Product</Link></li>
+            <ul tabIndex={0} className="dropdown-content menu p-2 shadow shadow-primary/20 bg-base-200 rounded-box w-52 mt-2">
+              <li>
+                <Link
+                  href="/dashboard/add-product"
+                  className={isActive("/dashboard/add-product")}
+                >
+                  Add Product
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -35,7 +51,7 @@ const Navbar = () => {
           {session && (
             <button
               onClick={() => signOut({ callbackUrl: "/" })}
-              className="btn btn-sm btn-outline btn-error"
+              className="btn btn-sm btn-outline btn-primary"
             >
               Logout
             </button>
@@ -49,7 +65,7 @@ const Navbar = () => {
                   src={session.user?.image || "/default-avatar.png"}
                   alt="Avatar"
                   className="w-10 h-10 rounded-full border-2 border-primary"
-                  referrerPolicy="no-referrer" 
+                  referrerPolicy="no-referrer"
                 />
               </label>
               <ul tabIndex={0} className="dropdown-content menu p-3 shadow bg-base-200 rounded-box w-56 mt-2">
@@ -79,7 +95,7 @@ const Navbar = () => {
                 src={session.user?.image || "/default-avatar.png"}
                 alt="User Avatar"
                 className="w-12 h-12 rounded-full border-2 border-primary"
-                referrerPolicy="no-referrer" 
+                referrerPolicy="no-referrer"
               />
               <div className="text-center">
                 <p className="font-semibold">{session.user?.name}</p>
@@ -88,15 +104,26 @@ const Navbar = () => {
             </div>
           )}
 
-          <Link href="/" className="block btn btn-ghost w-full justify-start">Home</Link>
-          <Link href="/products" className="block btn btn-ghost w-full justify-start">Products</Link>
+          <Link href="/" className={`block btn btn-ghost w-full justify-start ${isActive("/")}`}>Home</Link>
+          <Link href="/products" className={`block btn btn-ghost w-full justify-start ${isActive("/products")}`}>Products</Link>
 
           {/* Mobile Dashboard Dropdown */}
           <div className="dropdown w-full">
-            <label tabIndex={0} className="btn btn-ghost w-full text-left">Dashboard</label>
+            <label
+              tabIndex={0}
+              className={`btn btn-ghost w-full text-left ${pathname.startsWith("/dashboard") ? "text-primary font-semibold" : ""}`}
+            >
+              Dashboard
+            </label>
             <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-200 rounded-box w-full mt-2">
-              <li><Link href="/dashboard/add-product">Add Product</Link></li>
-              <li><Link href="/dashboard/view-products">View Products</Link></li>
+              <li>
+                <Link
+                  href="/dashboard/add-product"
+                  className={isActive("/dashboard/add-product")}
+                >
+                  Add Product
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -104,7 +131,7 @@ const Navbar = () => {
           {session && (
             <button
               onClick={() => signOut({ callbackUrl: "/" })}
-              className="btn btn-sm btn-error w-full mt-2"
+              className="btn btn-sm btn-outline btn-primary w-full mt-2"
             >
               Logout
             </button>

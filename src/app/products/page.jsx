@@ -9,7 +9,7 @@ export default function ProductsPage() {
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const res = await fetch("/api/products"); // API route থেকে ডেটা আনবে
+        const res = await fetch("/api/products");
         const data = await res.json();
         setProducts(data);
       } catch (error) {
@@ -21,7 +21,7 @@ export default function ProductsPage() {
   }, []);
 
   return (
-    <div className="container mx-auto py-10 px-3 @min-[370px]:px-4 @min-[600px]:px-7 @min-[px-9]: @min-[1200px]:px-10 @min-[1580px]:px-0 ">
+    <div className="max-w-[1536px] mx-auto py-10 px-3 @min-[370px]:px-4 @min-[600px]:px-7 @min-[px-9]: @min-[1200px]:px-10 @min-[1580px]:px-0 ">
       <h1 className="text-3xl text-primary font-bold mb-6 text-center">Our Products</h1>
 
       {products.length === 0 ? (
@@ -31,7 +31,7 @@ export default function ProductsPage() {
           {products.map((product) => (
             <div
               key={product._id}
-              className="bg-base-200 shadow-md rounded-xl overflow-hidden border hover:shadow-lg transition"
+              className="bg-base-200 shadow rounded-xl overflow-hidden hover:shadow-lg shadow-primary/50 transition"
             >
               <Image
                 src={product.image}

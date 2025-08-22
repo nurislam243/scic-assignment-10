@@ -45,19 +45,19 @@ export default function ProductDetailPage({ params }) {
       <button onClick={() => router.back()} className="btn btn-secondary mb-6">
         ← Back
       </button>
-      <div className="bg-white shadow-lg rounded-xl overflow-hidden lg:flex lg:gap-6 p-6">
+      <div className="bg-base-200 shadow-lg rounded-xl overflow-hidden lg:flex lg:gap-6 p-6">
         <div className="lg:w-1/2">
           <Image
             src={product.image}
             alt={product.name}
             width={600}
             height={400}
-            className="object-cover rounded-lg"
+            className="object-cover rounded-lg w-[600px] h-[400px]"
           />
         </div>
         <div className="lg:w-1/2 mt-6 lg:mt-0">
           <h1 className="text-4xl font-bold mb-4">{product.name}</h1>
-          <p className="text-gray-700 mb-4">{product.description}</p>
+          <p className="text-base-content mb-4">{product.description}</p>
           <p className="text-3xl font-semibold mb-6">${product.price}</p>
           <button className="btn btn-primary">Add to Cart</button>
         </div>

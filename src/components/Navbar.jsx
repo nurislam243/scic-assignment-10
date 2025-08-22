@@ -9,7 +9,7 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-base-100 shadow sticky top-0 z-50 px-3 @min-[370px]:px-4 @min-[600px]:px-7 @min-[px-9]: @min-[1200px]:px-10 @min-[1580px]:px-0">
+    <nav className="bg-base-100 shadow sticky top-0 z-50 px-3 @min-[370px]:px-4 @min-[600px]:px-7 @min-[800px]:px-9 @min-[1200px]:px-10 @min-[1580px]:px-0">
       <div className="max-w-[1536px] mx-auto flex items-center justify-between py-4  ">
         {/* Logo */}
         <Link href="/" className="text-2xl font-bold text-primary">
@@ -18,17 +18,16 @@ const Navbar = () => {
 
         {/* Desktop Links */}
         <div className="hidden md:flex space-x-6 font-medium items-center">
-          <Link href="/" className="hover:text-secondary">Home</Link>
-          <Link href="/products" className="hover:text-secondary">Products</Link>
+          <Link href="/" className="hover:text-primary">Home</Link>
+          <Link href="/products" className="hover:text-primary">Products</Link>
 
           {/* Dashboard Dropdown */}
           <div className="dropdown dropdown-end">
-            <label tabIndex={0} className="cursor-pointer hover:text-secondary">
+            <label tabIndex={0} className="cursor-pointer hover:text-primary">
               Dashboard
             </label>
             <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-200 rounded-box w-52 mt-2">
               <li><Link href="/dashboard/add-product">Add Product</Link></li>
-              <li><Link href="/dashboard/view-products">View Products</Link></li>
             </ul>
           </div>
 
@@ -50,6 +49,7 @@ const Navbar = () => {
                   src={session.user?.image || "/default-avatar.png"}
                   alt="Avatar"
                   className="w-10 h-10 rounded-full border-2 border-primary"
+                  referrerPolicy="no-referrer" 
                 />
               </label>
               <ul tabIndex={0} className="dropdown-content menu p-3 shadow bg-base-200 rounded-box w-56 mt-2">
@@ -79,6 +79,7 @@ const Navbar = () => {
                 src={session.user?.image || "/default-avatar.png"}
                 alt="User Avatar"
                 className="w-12 h-12 rounded-full border-2 border-primary"
+                referrerPolicy="no-referrer" 
               />
               <div className="text-center">
                 <p className="font-semibold">{session.user?.name}</p>

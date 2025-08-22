@@ -21,7 +21,7 @@ export default function ProductsPage() {
   }, []);
 
   return (
-    <div className="container mx-auto px-6 py-10">
+    <div className="container mx-auto py-10 px-3 @min-[370px]:px-4 @min-[600px]:px-7 @min-[px-9]: @min-[1200px]:px-10 @min-[1580px]:px-0 ">
       <h1 className="text-3xl font-bold mb-6 text-center">Our Products</h1>
 
       {products.length === 0 ? (

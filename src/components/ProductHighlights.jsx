@@ -20,7 +20,7 @@ export default function ProductHighlights() {
   }, []);
 
   return (
-    <section className="max-w-[1536px] mx-auto">
+    <section className="max-w-[1536px] mx-auto px-3 @min-[370px]:px-4 @min-[600px]:px-7 @min-[px-9]: @min-[1200px]:px-10 @min-[1580px]:px-0">
       <h2 className="text-3xl font-bold text-center mb-10 text-gray-800">
         Featured Products
       </h2>

@@ -22,7 +22,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`@container ${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Providers>
           <Navbar />
           <div className="min-h-[calc(100vh-64px)]">{children}</div>

@@ -67,48 +67,50 @@ export default function AddProductPage() {
   if (status === "unauthenticated") return null;
 
   return (
-    <div className="max-w-lg mx-auto mt-10 p-6 bg-base-100 shadow-xl rounded-xl">
-      <h1 className="text-2xl font-bold mb-6 text-center">Add New Product</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="text"
-          name="name"
-          placeholder="Product Name"
-          value={form.name}
-          onChange={handleChange}
-          className="input input-bordered w-full"
-          required
-        />
-        <textarea
-          name="description"
-          placeholder="Description"
-          value={form.description}
-          onChange={handleChange}
-          className="textarea textarea-bordered w-full"
-          required
-        />
-        <input
-          type="number"
-          name="price"
-          placeholder="Price"
-          value={form.price}
-          onChange={handleChange}
-          className="input input-bordered w-full"
-          required
-        />
-        <input
-          type="text"
-          name="image"
-          placeholder="Image URL"
-          value={form.image}
-          onChange={handleChange}
-          className="input input-bordered w-full"
-          required
-        />
-        <button type="submit" className="btn btn-primary w-full">
-          Add Product
-        </button>
-      </form>
+    <div className="px-3 @min-[370px]:px-4 @min-[600px]:px-7 @min-[px-9]: @min-[1200px]:px-10 @min-[1580px]:px-0">
+      <div className="max-w-lg mx-auto mt-10 p-6 bg-base-100 shadow-xl rounded-xl">
+        <h1 className="text-2xl font-bold mb-6 text-center">Add New Product</h1>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            type="text"
+            name="name"
+            placeholder="Product Name"
+            value={form.name}
+            onChange={handleChange}
+            className="input input-bordered w-full"
+            required
+          />
+          <textarea
+            name="description"
+            placeholder="Description"
+            value={form.description}
+            onChange={handleChange}
+            className="textarea textarea-bordered w-full"
+            required
+          />
+          <input
+            type="number"
+            name="price"
+            placeholder="Price"
+            value={form.price}
+            onChange={handleChange}
+            className="input input-bordered w-full"
+            required
+          />
+          <input
+            type="text"
+            name="image"
+            placeholder="Image URL"
+            value={form.image}
+            onChange={handleChange}
+            className="input input-bordered w-full"
+            required
+          />
+          <button type="submit" className="btn btn-primary w-full">
+            Add Product
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

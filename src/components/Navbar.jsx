@@ -9,8 +9,8 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-base-100 shadow sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto flex items-center justify-between py-4 px-4 md:px-8">
+    <nav className="bg-base-100 shadow sticky top-0 z-50 px-3 @min-[370px]:px-4 @min-[600px]:px-7 @min-[px-9]: @min-[1200px]:px-10 @min-[1580px]:px-0">
+      <div className="max-w-[1536px] mx-auto flex items-center justify-between py-4  ">
         {/* Logo */}
         <Link href="/" className="text-2xl font-bold text-primary">
           ShopNex

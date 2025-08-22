@@ -1,78 +1,22 @@
 "use client";
 
 import { signIn } from "next-auth/react";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const router = useRouter();
-
-  // Handle credential login
-  const handleCredentialLogin = async (e) => {
-    e.preventDefault();
-
-    const result = await signIn("credentials", {
-      redirect: false,
-      email,
-      password,
-    });
-
-    if (result?.ok) {
-      router.push("/products");
-    } else {
-      alert(result?.error || "Login failed");
-    }
+  const handleGoogleLogin = () => {
+    signIn("google", { callbackUrl: "/products" });
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-base-200">
-      <div className="card w-full max-w-md shadow-xl bg-base-100">
-        <div className="card-body text-center">
-          <h1 className="text-3xl font-bold text-gray-800 mb-4">
-            Login to <span className="text-primary">ShopNex</span>
-          </h1>
-
-          <p className="text-gray-600 mb-6">
-            Sign in with Google or use your email/password
-          </p>
-
-          {/* Google Login Button */}
-          <button
-            onClick={() => signIn("google")}
-            className="btn btn-primary btn-block mb-4"
-          >
-            Sign in with Google
-          </button>
-
-          {/* Credential Login Form */}
-          <form onSubmit={handleCredentialLogin} className="space-y-3">
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="input input-bordered w-full"
-              required
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="input input-bordered w-full"
-              required
-            />
-            <button type="submit" className="btn btn-secondary btn-block mt-2">
-              Login
-            </button>
-          </form>
-
-          <p className="mt-6 text-gray-500 text-sm">
-            Don't have an account? <a href="/register" className="text-primary">Register</a>
-          </p>
-        </div>
+      <div className="card w-full max-w-md shadow-xl bg-base-100 p-6">
+        <h1 className="text-2xl font-bold mb-4 text-center">Login to ShopNex</h1>
+        <button
+          onClick={handleGoogleLogin}
+          className="btn btn-primary w-full"
+        >
+          Sign in with Google
+        </button>
       </div>
     </div>
   );

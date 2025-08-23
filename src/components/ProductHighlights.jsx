@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 export default function ProductHighlights() {
   const [highlightProducts, setHighlightProducts] = useState([]);
+  const [loading, setLoading] = useState(true); // 🔹 Loading state
 
   useEffect(() => {
     const fetchHighlights = async () => {
@@ -14,6 +15,8 @@ export default function ProductHighlights() {
         setHighlightProducts(data);
       } catch (error) {
         console.error("Failed to fetch highlights:", error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchHighlights();
@@ -24,33 +27,47 @@ export default function ProductHighlights() {
       <h2 className="text-3xl font-bold text-center mb-10 text-primary">
         Featured Products
       </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 @min-[1350px]:grid-cols-4 gap-6">
-        {highlightProducts.map((product) => (
-          <div
-            key={product._id}
-            className="card bg-base-100 shadow-md rounded-xl overflow-hidden"
-          >
-            <figure>
-              <Image
-                src={product.image}
-                alt={product.name}
-                width={400}
-                height={250}
-                className="w-full h-48 object-cover"
-              />
-            </figure>
-            <div className="card-body bg-base-200 items-start"> {/* Left align here */}
-              <h3 className="card-title text-primary">{product.name}</h3>
-              <p className="text-base-content/80 line-clamp-2">{product.description}</p>
-              <p className="font-bold">${product.price}</p>
-              <div className="card-actions mt-1">
-                <Link href={`/products/${product._id}`} className="btn btn-primary">View Details</Link>
+
+      {loading ? (
+        <div className="flex flex-col justify-center items-center h-40 gap-3">
+          <span className="loading loading-spinner loading-lg text-primary"></span>
+          <p className="text-primary font-medium">Loading products...</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 @min-[1350px]:grid-cols-4 gap-6">
+          {highlightProducts.map((product) => (
+            <div
+              key={product._id}
+              className="card bg-base-100 shadow-md rounded-xl overflow-hidden"
+            >
+              <figure>
+                <Image
+                  src={product.image}
+                  alt={product.name}
+                  width={400}
+                  height={250}
+                  className="w-full h-48 object-cover"
+                />
+              </figure>
+              <div className="card-body bg-base-200 items-start">
+                <h3 className="card-title text-primary">{product.name}</h3>
+                <p className="text-base-content/80 line-clamp-2">
+                  {product.description}
+                </p>
+                <p className="font-bold">${product.price}</p>
+                <div className="card-actions mt-1">
+                  <Link
+                    href={`/products/${product._id}`}
+                    className="btn btn-primary"
+                  >
+                    View Details
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </section>
-
   );
 }

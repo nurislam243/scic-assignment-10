@@ -14,7 +14,18 @@ export async function GET() {
 
 export async function POST(req) {
   try {
-    const { name, description, price, image } = await req.json();
+    const { 
+      name, 
+      description, 
+      price, 
+      image, 
+      category, 
+      brand, 
+      stock, 
+      releaseDate, 
+      rating 
+    } = await req.json();
+
     const client = await clientPromise;
     const db = client.db("shopnex");
 
@@ -23,6 +34,11 @@ export async function POST(req) {
       description,
       price: parseFloat(price),
       image,
+      category,
+      brand,
+      stock: parseInt(stock) || 0,
+      releaseDate: releaseDate ? new Date(releaseDate) : new Date(),
+      rating: parseFloat(rating) || 0,
       createdAt: new Date(),
     });
 
@@ -34,3 +50,4 @@ export async function POST(req) {
     return new Response(err.message, { status: 500 });
   }
 }
+

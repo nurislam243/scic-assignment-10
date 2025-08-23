@@ -7,20 +7,25 @@ import { FaStar, FaRegStar, FaStarHalfAlt } from "react-icons/fa";
 export default function ProductDetailPage({ params }) {
   const { id } = params;
   const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
+        setLoading(true);
         const res = await fetch(`/api/products/${id}`);
         if (!res.ok) {
           setProduct(null);
+          setLoading(false);
           return;
         }
         const data = await res.json();
         setProduct(data);
       } catch (err) {
         console.error("Failed to fetch product:", err);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -34,7 +39,9 @@ export default function ProductDetailPage({ params }) {
       if (rating >= i) {
         stars.push(<FaStar key={i} className="text-yellow-500 inline-block" />);
       } else if (rating >= i - 0.5) {
-        stars.push(<FaStarHalfAlt key={i} className="text-yellow-500 inline-block" />);
+        stars.push(
+          <FaStarHalfAlt key={i} className="text-yellow-500 inline-block" />
+        );
       } else {
         stars.push(<FaRegStar key={i} className="text-yellow-500 inline-block" />);
       }
@@ -42,6 +49,17 @@ export default function ProductDetailPage({ params }) {
     return stars;
   };
 
+  // Loading state
+  if (loading) {
+    return (
+      <div className="flex flex-col justify-center items-center h-40 gap-3">
+        <span className="loading loading-spinner loading-lg text-primary"></span>
+        <p className="text-primary font-medium">Loading products...</p>
+      </div>
+    );
+  }
+
+  // Product not found
   if (!product) {
     return (
       <div className="text-center py-20">
@@ -56,6 +74,7 @@ export default function ProductDetailPage({ params }) {
     );
   }
 
+  // Product detail page
   return (
     <div className="max-w-[1536px] mx-auto py-10 px-3 @min-[370px]:px-4 @min-[600px]:px-7 @min-[800px]:px-9 @min-[1200px]:px-10 @min-[1580px]:px-0">
       {/* Back Button */}
@@ -81,29 +100,29 @@ export default function ProductDetailPage({ params }) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <div>
             <p className="text-lg">
-              <span className="font-semibold">Category:</span> {product.category}
+              <span className="font-semibold">Category:</span> {product?.category}
             </p>
             <p className="text-lg">
-              <span className="font-semibold">Brand:</span> {product.brand}
+              <span className="font-semibold">Brand:</span> {product?.brand}
             </p>
             <p className="text-lg">
               <span className="font-semibold">Release Date:</span>{" "}
-              {new Date(product.releaseDate).toLocaleDateString()}
+              {new Date(product?.releaseDate).toLocaleDateString()}
             </p>
           </div>
           <div>
             <p className="text-lg flex items-center gap-2">
-              <span className="font-semibold">Stock:</span> {product.stock} pcs
+              <span className="font-semibold">Stock:</span> {product?.stock} pcs
             </p>
             <p className="text-lg flex items-center gap-2">
               <span className="font-semibold">Rating:</span>{" "}
-              <span className="flex">{renderStars(product.rating)}</span>
-              <span className="ml-2">({product.rating})</span>
+              <span className="flex">{renderStars(product?.rating)}</span>
+              <span className="ml-2">({product?.rating})</span>
             </p>
           </div>
         </div>
 
-        <p className="text-3xl font-semibold mb-6">${product.price}</p>
+        <p className="text-3xl font-semibold mb-6">${product?.price}</p>
 
         <button className="btn btn-primary w-full">Add to Cart</button>
       </div>

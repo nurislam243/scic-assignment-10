@@ -25,7 +25,10 @@ export default function ProductsPage() {
       <h1 className="text-3xl text-primary font-bold mb-6 text-center">Our Products</h1>
 
       {products.length === 0 ? (
-        <p className="text-center text-primary">Loading products...</p>
+        <div className="flex flex-col justify-center items-center h-40 gap-3">
+          <span className="loading loading-spinner loading-lg text-primary"></span>
+          <p className="text-primary font-medium">Loading products...</p>
+        </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {products.map((product) => (

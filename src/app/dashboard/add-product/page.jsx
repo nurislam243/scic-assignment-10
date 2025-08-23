@@ -14,6 +14,9 @@ export default function AddProductPage() {
     description: "",
     price: "",
     image: "",
+    category: "",
+    brand: "",
+    stock: "",
   });
 
   // Redirect if unauthenticated
@@ -40,9 +43,14 @@ export default function AddProductPage() {
       const res = await fetch("/api/products", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          ...form,
+          price: Number(form.price),
+          stock: Number(form.stock),
+          rating: 0, 
+          releaseDate: new Date().toISOString(),
+        }),
       });
-
 
       if (res.ok) {
         Swal.fire({
@@ -52,7 +60,16 @@ export default function AddProductPage() {
           timer: 1500,
         });
 
-        setForm({ name: "", description: "", price: "", image: "" });
+        setForm({
+          name: "",
+          description: "",
+          price: "",
+          image: "",
+          category: "",
+          brand: "",
+          stock: "",
+        });
+
         setTimeout(() => router.push("/products"), 1500);
       } else {
         const data = await res.text();
@@ -63,13 +80,17 @@ export default function AddProductPage() {
     }
   };
 
-  if (status === "loading") return <p className="text-center mt-10">Checking authentication...</p>;
+  if (status === "loading")
+    return <p className="text-center mt-10">Checking authentication...</p>;
   if (status === "unauthenticated") return null;
 
   return (
     <div className="px-3 @min-[370px]:px-4 @min-[600px]:px-7 @min-[800px]:px-9 @min-[1200px]:px-10 @min-[1580px]:px-0">
       <div className="max-w-[800px] mx-auto mt-[14vh] p-6 bg-base-200/40 shadow-md shadow-primary/20 rounded-xl">
-        <h1 className="text-2xl text-primary font-bold mb-6 text-center">Add New Product</h1>
+        <h1 className="text-2xl text-primary font-bold mb-6 text-center">
+          Add New Product
+        </h1>
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="text"
@@ -80,6 +101,7 @@ export default function AddProductPage() {
             className="input input-bordered w-full"
             required
           />
+
           <textarea
             name="description"
             placeholder="Description"
@@ -88,15 +110,17 @@ export default function AddProductPage() {
             className="textarea textarea-bordered w-full"
             required
           />
+
           <input
             type="number"
             name="price"
-            placeholder="Price"
+            placeholder="Price (USD)"
             value={form.price}
             onChange={handleChange}
             className="input input-bordered w-full"
             required
           />
+
           <input
             type="text"
             name="image"
@@ -106,6 +130,37 @@ export default function AddProductPage() {
             className="input input-bordered w-full"
             required
           />
+
+          <input
+            type="text"
+            name="category"
+            placeholder="Category (e.g. Laptop)"
+            value={form.category}
+            onChange={handleChange}
+            className="input input-bordered w-full"
+            required
+          />
+
+          <input
+            type="text"
+            name="brand"
+            placeholder="Brand (e.g. Apple)"
+            value={form.brand}
+            onChange={handleChange}
+            className="input input-bordered w-full"
+            required
+          />
+
+          <input
+            type="number"
+            name="stock"
+            placeholder="Stock Quantity"
+            value={form.stock}
+            onChange={handleChange}
+            className="input input-bordered w-full"
+            required
+          />
+
           <button type="submit" className="btn btn-primary w-full">
             Add Product
           </button>
